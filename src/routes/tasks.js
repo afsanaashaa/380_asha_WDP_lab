@@ -14,7 +14,14 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const id = parseInt(req.params.id);
+  const idParam = req.params.id;
+  
+
+  if (isNaN(idParam) || idParam.trim() === '') {
+    return res.status(400).json({ error: 'Invalid ID format' });
+  }
+  
+  const id = parseInt(idParam);
   const task = tasks.find(t => t.id === id);
   
   if (!task) {
